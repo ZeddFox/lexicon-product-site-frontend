@@ -8,7 +8,7 @@ export const Cart = () => {
     
     return (
         <div className="page-main">
-            
+            <div>Cart page</div>
         </div>
     );
-}
+};

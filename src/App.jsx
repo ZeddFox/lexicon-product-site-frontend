@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route} from 'react-router';
+import { Routes, Route } from 'react-router';
+import { Navbar } from "./components/Navbar";
 import { Main } from './pages/main';
 import { Login } from './pages/login';
 import { Register } from './pages/register';
@@ -11,17 +12,16 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <BrowserRouter>
+    <div>
+      <Navbar />
       <Routes>
-
           <Route path="/" element={<Main/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/product" element={<Product/>} />
           <Route path="/cart" element={<Cart/>} />
-
       </Routes>
-    </BrowserRouter>
+    </div>
   )
 }
 
