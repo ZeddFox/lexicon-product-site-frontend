@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { API_BASE_URL } from "../config";
 
-export const Product = () => {
+export const Cart = () => {
     const navigate = useNavigate();
     
     return (

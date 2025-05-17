@@ -1,0 +1,17 @@
+.page-main{
+    color: green;
+}
+
+.small-shopping-cart{
+    color: yellow;
+}
+
+.all-products-page{
+    color: orange;
+    display: flex;
+    flex-direction: row;
+}
+
+.main-page-thumbnail{
+    border-radius: 50px;
+}
