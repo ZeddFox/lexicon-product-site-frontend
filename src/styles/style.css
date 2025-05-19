@@ -77,3 +77,11 @@
     background-color: rgb(0, 96, 0);
     cursor: pointer;
 }
+
+/* ----- Login / Register Pages ----- */
+.form-input-box{
+    display: flex;
+    flex-direction: column;
+    max-width: 25%;
+    gap: 5px;
+}
