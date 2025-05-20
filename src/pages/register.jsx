@@ -16,7 +16,7 @@ export const Register = () => {
         e.preventDefault();
         try{
             const requestBody = {email, firstName, lastName, password}
-            const respone = axios.post($API_BASE_URL + "/register", requestBody)
+            const respone = axios.post(API_BASE_URL + "/register", requestBody)
             navigate("/login")
         }
         catch (error){

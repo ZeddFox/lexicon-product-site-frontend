@@ -16,7 +16,7 @@ export const Login = () => {
         e.preventDefault();
         try{
             const requestBody = {email, password}
-            const respone = axios.post($API_BASE_URL + "/login", requestBody)
+            const respone = axios.post(API_BASE_URL + "/login", requestBody)
             sessionStorage.setItem('admin', respone.isAdmin)
             navigate("/")
         }
