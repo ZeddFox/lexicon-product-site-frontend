@@ -1,8 +1,7 @@
-/* Most of this CSS file is AI-generated */
+/* 95%-ish of this CSS file is AI-generated */
 /* Dark Mode Theme with Unified Colors */
 :root {
     /* Color palette */
-    --bg-dark: #121212;
     --bg-card: #1e1e1e;
     --bg-accent: #2d2d2d;
     --text-primary: #e0e0e0;
@@ -16,7 +15,6 @@
 }
 
 body {
-    background-color: var(--bg-dark);
     color: var(--text-primary);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -79,7 +77,6 @@ body {
 
 /* ----- Main Products Page ----- */
 .all-products-page {
-    background-color: var(--bg-dark);
     color: var(--text-primary);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
