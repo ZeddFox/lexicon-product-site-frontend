@@ -1,45 +1,44 @@
-import { useForm } from 'react-hook-form';
 import '../styles/style.css';
-import { useState } from 'react';
+import { API_URL } from "../config";
+import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { API_BASE_URL } from "../config";
+import { useForm } from 'react-hook-form';
 
 export const Register = () => {
     const navigate = useNavigate();
-
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [password, setPassword] = useState("");
-
-    async function login(e){
-        e.preventDefault();
-        try{
-            const requestBody = {email, firstName, lastName, password}
-            const respone = axios.post(API_BASE_URL + "/register", requestBody)
+    const { register, handleSubmit } = useForm();
+    const onSubmit = async(data) => {
+        try {
+            const respone = await axios.post(API_URL + "/register", {
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                password: data.password
+            });
+            alert("Axios post successful: " + respone)
             navigate("/login")
         }
         catch (error){
-            console.log(error);
+            alert("myError: " + error)
         }
     }
     
     return (
         <div className="page-main">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <h2>Register</h2>
                 <div className="form-input-box">
-                    <p>Email Address</p>
-                    <input onChange={e => {setEmail(e.target.value)}} type="email" className="form-control" id="email" placeholder="Email"/>
+                    <label>Email Address</label>
+                    <input type="email" className="form-control" id="email" placeholder="Email" {...register("email")} required/>
+                </div>
+                    <div className="form-input-box">
+                    <label>First & Last name</label>
+                    <input type="text" className="form-control" id="firstName" placeholder="First Name" {...register("firstName")} required/>
+                    <input type="text" className="form-control" id="lastName" placeholder="Last Name" {...register("lastName")} required/>
                 </div>
                 <div className="form-input-box">
-                <p>Name</p>
-                <input onChange={e => {setFirstName(e.target.value)}} type="text" className="form-control" id="firstName" placeholder="First Name"/>
-                <input onChange={e => {setLastName(e.target.value)}} type="text" className="form-control" id="lastName" placeholder="Last Name"/>
-                </div>
-                <div className="form-input-box">
-                    <p>Password</p>
-                    <input onChange={e => {setPassword(e.target.value)}} type="password" className="form-control" id="password" placeholder="Password"/>
+                    <label>Password</label>
+                    <input type="password" className="form-control" id="password" placeholder="Password" {...register("password")} required/>
                 </div>
                 <button type="submit" className="form-button">Register</button>
             </form>
