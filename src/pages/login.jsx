@@ -14,7 +14,6 @@ export const Login = () => {
 
     async function login(e){
         e.preventDefault();
-        console.log("Try log in")
         try{
             const requestBody = {email, password}
             const response = await axios.post(API_URL + "/login", requestBody)
@@ -24,9 +23,17 @@ export const Login = () => {
             sessionStorage.setItem("firstName", response.data.firstName)
             sessionStorage.setItem("lastName", response.data.lastName)
             sessionStorage.setItem("admin", response.data.isAdmin)
-            console.log("logged in")
+            sessionStorage.setItem("adminMode", "false")
+            console.log(response.data.userID)
+            console.log(response.data.email)
             console.log(response.data.firstName)
+            console.log(response.data.lastName)
+            console.log(response.data.isAdmin)
+            console.log(sessionStorage.getItem("userID"))
+            console.log(sessionStorage.getItem("email"))
             console.log(sessionStorage.getItem("firstName"))
+            console.log(sessionStorage.getItem("lastName"))
+            console.log(sessionStorage.getItem("admin"))
             navigate("/")
         }
         catch (error){
