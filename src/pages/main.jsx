@@ -26,17 +26,17 @@ function ProductList(){
 
         getProducts();
 
-    }, [products])
+    }, [])
 
     return (
-        <div>{products.map(product => (
-            <div key={product.productID}>
+        <div className="all-products-page">{products.map(product => (
+            <div key={product.productID} className="product-box">
 
                 <p className="product-name-main-page">{product.name}</p>
 
                 <img 
                 className="main-page-thumbnail" 
-                src={product.Images?.find(productImage => productImage.isThumbnail)?.path || "../assets/tempthumb.png"} 
+                src={product.Images?.find(productImage => productImage.isThumbnail)?.path || thumbnail} 
                 alt="no idea" 
                 width={imgWidth} 
                 height={imgHeight} 

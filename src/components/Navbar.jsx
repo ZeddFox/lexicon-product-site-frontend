@@ -28,7 +28,7 @@ export const Navbar = () => {
         </div>
 
         {
-            sessionStorage.getItem("admin") ? 
+            sessionStorage.getItem("admin") == "true" ? 
             <div>{sessionStorage.getItem("adminMode") == "true" ? 
                 <div>Admin Mode Active <button onClick={() => toggleAdminMode()}>Set to Normal Mode</button></div> : 
                 <button onClick={() => toggleAdminMode()}>Set to Admin Mode</button> }</div>
