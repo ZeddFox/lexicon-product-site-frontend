@@ -14,11 +14,19 @@ export const Login = () => {
 
     async function login(e){
         e.preventDefault();
+        console.log("Try log in")
         try{
             const requestBody = {email, password}
-            const respone = axios.post(API_URL + "/login", requestBody)
-            sessionStorage.setItem("user", respone)
-            sessionStorage.setItem("admin", respone.isAdmin)
+            const response = await axios.post(API_URL + "/login", requestBody)
+            console.log(response.data)
+            sessionStorage.setItem("userID", response.data.userID)
+            sessionStorage.setItem("email", response.data.email)
+            sessionStorage.setItem("firstName", response.data.firstName)
+            sessionStorage.setItem("lastName", response.data.lastName)
+            sessionStorage.setItem("admin", response.data.isAdmin)
+            console.log("logged in")
+            console.log(response.data.firstName)
+            console.log(sessionStorage.getItem("firstName"))
             navigate("/")
         }
         catch (error){

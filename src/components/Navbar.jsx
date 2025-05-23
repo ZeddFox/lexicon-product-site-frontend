@@ -2,18 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 export const Navbar = () => {
-    let user;
-    var activeUser;
-    useEffect(() => {
-        user = sessionStorage.getItem("user")
-        if (user != null){
-            activeUser = true;
-        }
-        else{
-            activeUser = false;
-        }
-    }, [user]);
-
     return (
     <nav className="navbar-main">
         <div className="navbar-left">
@@ -33,24 +21,17 @@ export const Navbar = () => {
         }
 
         <div className="navbar-right">
-            <Link to="/">
-                Home
-            </Link>
-            {
-                activeUser ? <div>{user.FirstName}</div> :
-                <div>
-            <Link to="/login">
-                Login
-            </Link>
-            <Link to="/register">
-                Register
-            </Link>
-            </div>
+            <Link to="/">Home</Link>
+            <Link to="/cart">Shopping Cart</Link>
 
-}
-            <Link to="/cart">
-                Shopping Cart
-            </Link>
+            {
+                sessionStorage.getItem("firstName") !== null && sessionStorage.getItem("firstName") !== undefined ?
+                <div><Link to={"/profile/" + sessionStorage.getItem("userID")}>{sessionStorage.getItem("firstName")}</Link></div> :
+                <div>
+                    <Link to="/register">Register</Link>
+                    <Link to="/login">Login</Link>
+                    </div>
+            }
         </div>
     </nav>
     );

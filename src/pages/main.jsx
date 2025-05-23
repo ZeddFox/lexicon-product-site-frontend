@@ -8,40 +8,61 @@ import thumbnail from "../assets/tempthumb.png"
 var tempProdName = "Epic Product";
 var imgWidth = "300px";
 var imgHeight = "300px";
-var tempProductID = 0;
-var hasProducts = false;
-var productList;
+var isFalse = true;
+
+function ProductList(){
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const response = await axios.get(API_URL + "/p/all");
+                setProducts(response.data.products);
+            }
+            catch (error) {
+                console.error("Error getting products: ", error);
+            }
+        }
+
+        getProducts();
+
+    }, [products])
+
+    return (
+        <div>{products.map(product => (
+            <div key={product.productID}>
+
+                <p className="product-name-main-page">{product.name}</p>
+
+                <img 
+                className="main-page-thumbnail" 
+                src={product.Images?.find(productImage => productImage.isThumbnail)?.path || "../assets/tempthumb.png"} 
+                alt="no idea" 
+                width={imgWidth} 
+                height={imgHeight} 
+                onClick={() => navigate("/product/" + product.productID)}/>
+
+            </div>
+        ))}</div>
+    )
+};
 
 export const Main = () => {
     const navigate = useNavigate();
-    async function getProducts() {
-        const response = axios.get(API_URL + "/all")
-        productList = response.data.products
-        hasProducts = true;
-        console.log(productList);
-    }
-    useEffect(() => {
-        getProducts();
-    }, [hasProducts])
-
     
     return (
         <div className="page-main">
-            <div>{productList.map(product => (
-                <div key={product.productID}>
-                    <p className="product-name-main-page">{product.name}</p>
-                    <img className="main-page-thumbnail" src={product.path} alt="no idea" width={imgWidth} height={imgHeight} onClick={() => navigate("/product/" + product.productID)}/>
-                </div>
-            ))}</div>
+
+            {ProductList()}
 
             <div className="all-products-page">
                 <div className="product-box">
                     <div className="product-name-main-page">{tempProdName + " 1"}</div>
-                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product")}/>
+                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product/1")}/>
                 </div>
                 <div className="product-box">
                     <div className="product-name-main-page">{tempProdName + " 2"}</div>
-                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product")}/>
+                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product/2")}/>
                 </div>
             </div>
         </div>
