@@ -20,8 +20,15 @@ function ProductList(){
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const response = await axios.get(API_URL + "/p/all");
-                setProducts(response.data.products);
+                if (sessionStorage.getItem("adminMode") == "true"){
+                    const response = await axios.get(API_URL + "/p/all/admin?password=" + "SuperSecretAdminPassword");
+                    setProducts(response.data.products);
+                }
+                else{
+                    const response = await axios.get(API_URL + "/p/all");
+                    setProducts(response.data.products);
+                }
+
             }
             catch (error) {
                 console.error("Error getting products: ", error);
