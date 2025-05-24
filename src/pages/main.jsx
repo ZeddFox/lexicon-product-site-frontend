@@ -5,13 +5,17 @@ import { API_URL } from "../config";
 import axios from "axios";
 import thumbnail from "../assets/tempthumb.png"
 
-var tempProdName = "Epic Product";
 var imgWidth = "300px";
 var imgHeight = "300px";
-var isFalse = true;
 
 function ProductList(){
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
+
+   function gotoProductPage(IDOfProduct){
+        sessionStorage.setItem("curProduct", IDOfProduct)
+        navigate("/product/" + IDOfProduct)
+   } 
 
     useEffect(() => {
         const getProducts = async () => {
@@ -28,6 +32,14 @@ function ProductList(){
 
     }, [])
 
+    function adminFunctions(){
+        if (sessionStorage.getItem("adminMode") == "true"){
+            return (
+                <button onClick={() => {navigate("/newproduct")}}>Add New Product</button>
+            )
+        }
+    }
+
     return (
         <div className="all-products-page">{products.map(product => (
             <div key={product.productID} className="product-box">
@@ -37,34 +49,25 @@ function ProductList(){
                 <img 
                 className="main-page-thumbnail" 
                 src={product.Images?.find(productImage => productImage.isThumbnail)?.path || thumbnail} 
-                alt="no idea" 
+                alt={product.Images?.find(productImage => productImage.isThumbnail)?.altDescription || "No thumbnail found"}
                 width={imgWidth} 
                 height={imgHeight} 
-                onClick={() => navigate("/product/" + product.productID)}/>
+                onClick={() => gotoProductPage(product.productID)}/>
 
             </div>
-        ))}</div>
+        ))}
+        <div>{adminFunctions()}</div>
+        </div>
     )
 };
 
 export const Main = () => {
-    const navigate = useNavigate();
     
     return (
         <div className="page-main">
 
             {ProductList()}
 
-            <div className="all-products-page">
-                <div className="product-box">
-                    <div className="product-name-main-page">{tempProdName + " 1"}</div>
-                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product/1")}/>
-                </div>
-                <div className="product-box">
-                    <div className="product-name-main-page">{tempProdName + " 2"}</div>
-                    <img className="main-page-thumbnail" src={thumbnail} alt="temp picture" width={imgWidth} height={imgHeight} onClick={() => navigate("/product/2")}/>
-                </div>
-            </div>
         </div>
     );
 };

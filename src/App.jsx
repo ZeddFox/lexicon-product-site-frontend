@@ -7,6 +7,7 @@ import { Register } from './pages/register';
 import { Product } from './pages/product';
 import { Cart } from './pages/cart';
 import { Profile } from './pages/profile';
+import { NewProduct } from './pages/newproduct';
 import './App.css'
 
 function App() {
@@ -19,9 +20,10 @@ function App() {
           <Route path="/" element={<Main/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
-          <Route path="/product/:id" element={<Product/>} />
+          <Route path="/product/:productID" element={<Product/>} />
           <Route path="/cart" element={<Cart/>} />
-          <Route path="/profile/:id" element={<Profile/>} />
+          <Route path="/profile/:userID" element={<Profile/>} />
+          <Route path="/newproduct" element={<NewProduct/>} />
       </Routes>
     </div>
   )
