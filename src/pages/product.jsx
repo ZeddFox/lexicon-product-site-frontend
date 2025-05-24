@@ -53,7 +53,11 @@ export const Product = () => {
                     <div className="product-status-box">
                         <h1>{product.price} kr</h1>
                         <h2>{product.amount} in stock</h2>
-                        <button className="add-to-cart-button">Add to cart</button>
+                        {
+                            (product.amount < 1) ? 
+                            <button className="add-to-cart-button">Out of stock</button> :
+                            <button className="add-to-cart-button">Add to cart</button>
+                        }
                     </div>
             </div>
         );
