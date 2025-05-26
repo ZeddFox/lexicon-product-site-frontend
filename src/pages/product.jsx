@@ -4,6 +4,7 @@ import { useParams } from "react-router"
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from "../config";
 import axios from "axios";
+import useAdminMode from '../hooks/useAdminMode';
 
 export const Product = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const Product = () => {
         if (productID){
             getProduct()
         }
-    },[productID])
+    },[productID, adminMode])
 
     function adminFunctions(){
         if (sessionStorage.getItem("adminMode") == "true"){
