@@ -1,35 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-
-function toggleAdminMode(){
-    if (sessionStorage.getItem("adminMode") == "true"){
-        console.log("was: " + sessionStorage.getItem("adminMode"))
-        sessionStorage.setItem("adminMode", "false")
-        console.log("now: " + sessionStorage.getItem("adminMode"))
-    }
-    else{
-        console.log("was: " + sessionStorage.getItem("adminMode"))
-        sessionStorage.setItem("adminMode", "true")
-        console.log("now: " + sessionStorage.getItem("adminMode"))
-    }
-}
+import { useEffect, useState } from "react";
+import useAdminMode from "../hooks/useAdminMode.js";
+import logo from "../assets/react.png"
 
 export const Navbar = () => {
+    const { adminMode, isAdmin, toggleAdminMode } = useAdminMode();
 
     return (
     <nav className="navbar-main">
         <div className="navbar-left">
             <Link to="/">
                 <span>
-                    Logo
+                    <img src={logo} height="50px" width="50px"/>
                 </span>
             </Link>
         </div>
 
         {
-            sessionStorage.getItem("admin") == "true" ? 
-            <div>{sessionStorage.getItem("adminMode") == "true" ? 
+            isAdmin === "true" ? 
+            <div>{adminMode === "true" ? 
                 <div>Admin Mode Active <button onClick={() => toggleAdminMode()}>Set to Normal Mode</button></div> : 
                 <button onClick={() => toggleAdminMode()}>Set to Admin Mode</button> }</div>
             : <div></div>

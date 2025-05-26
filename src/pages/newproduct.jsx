@@ -1,13 +1,15 @@
 import { useForm } from 'react-hook-form';
 import '../styles/style.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from "react-router-dom"; 
 import { API_URL } from "../config";
+import useAdminMode from '../hooks/useAdminMode';
 import axios from 'axios';
 
 export const NewProduct = () => {
     const navigate = useNavigate();
+    const { adminMode, isAdmin, toggleAdminMode } = useAdminMode();
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -26,7 +28,12 @@ export const NewProduct = () => {
             console.log(error);
         }
     }
-    if (sessionStorage.getItem("adminMode")  == "true" || sessionStorage.getItem("admin") == "true"){
+
+    useEffect(() => {
+
+    }, [adminMode])
+
+    if (adminMode  === "true" || isAdmin === "true"){
         return (
             <div className="page-main">
                 <form>

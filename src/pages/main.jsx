@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router';
 import { API_URL } from "../config";
 import axios from "axios";
 import thumbnail from "../assets/tempthumb.png"
+import useAdminMode from "../hooks/useAdminMode.js";
 
 var imgWidth = "300px";
 var imgHeight = "300px";
 
 function ProductList(){
     const navigate = useNavigate();
+    const { adminMode, isAdmin, toggleAdminMode } = useAdminMode();
     const [products, setProducts] = useState([]);
 
    function gotoProductPage(IDOfProduct){
@@ -17,30 +19,29 @@ function ProductList(){
         navigate("/product/" + IDOfProduct)
    } 
 
-    useEffect(() => {
-        const getProducts = async () => {
-            try {
-                if (sessionStorage.getItem("adminMode") == "true"){
-                    const response = await axios.get(API_URL + "/p/all/admin?password=" + "SuperSecretAdminPassword");
-                    setProducts(response.data.products);
-                }
-                else{
-                    const response = await axios.get(API_URL + "/p/all");
-                    setProducts(response.data.products);
-                }
-
-            }
-            catch (error) {
-                console.error("Error getting products: ", error);
-            }
+   const getProducts = async () => {
+    try {
+        if (adminMode === "true"){
+            const response = await axios.get(API_URL + "/p/all/admin?password=" + "SuperSecretAdminPassword");
+            setProducts(response.data.products);
+        }
+        else{
+            const response = await axios.get(API_URL + "/p/all");
+            setProducts(response.data.products);
         }
 
-        getProducts();
+    }
+    catch (error) {
+        console.error("Error getting products: ", error);
+    }
+}
 
-    }, [])
+    useEffect(() => {
+        getProducts();
+    }, [adminMode])
 
     function adminFunctions(){
-        if (sessionStorage.getItem("adminMode") == "true"){
+        if (adminMode === "true"){
             return (
                 <button onClick={() => {navigate("/newproduct")}}>Add New Product</button>
             )
@@ -51,7 +52,7 @@ function ProductList(){
         <div className="all-products-page">{products.map(product => (
             <div key={product.productID} className="product-box">
 
-                <p className="product-name-main-page">{product.name}</p>
+                <p className="product-name-main-page">{product.enabled ? product.name : "Hidden: " + product.name}</p>
 
                 <img 
                 className="main-page-thumbnail" 
